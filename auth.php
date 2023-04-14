@@ -33,5 +33,24 @@
         $username = $_POST['login'] ?? null;
         return $username;
     }
-    print_r(checkPassword('user1', '654321'));
+    
+    //Запуск сессий;
+    session_start();
+
+    if (isset($_POST['login']) && isset($_POST['password']))
+    {
+        // получаем данные из формы с авторизацией
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        //проверка пароля и логина
+        if (checkPassword($login, $password)){
+        echo ("логин совпадает и пароль верны");
+        $_SESSION['Name']=$login;
+        // идем на страницу для авторизованного пользователя
+        header("Location: index.php");
+    }
+    else
+        {die('Такой логин с паролем не найдены в базе данных.');
+        }
+    }
 ?>
