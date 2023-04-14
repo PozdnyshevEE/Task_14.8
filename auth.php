@@ -30,8 +30,12 @@
     
     // функция getCurrentUser() которая возвращает либо имя вошедшего на сайт пользователя, либо null
     function getCurrentUser() {
-        $username = $_POST['login'] ?? null;
-        return $username;
+        $username = $_SESSION['login'] ?? null;
+        $password = $_SESSION['password'] ?? null;
+        if (checkPassword($username, $password)) {
+            return $username;
+        }
+        return null;
     }
     
     //Запуск сессий;
