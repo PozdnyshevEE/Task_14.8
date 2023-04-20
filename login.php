@@ -5,51 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация</title>
+    <style>
+        body {
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            background-image: url(https://ogorodniku.com/uploads/posts/2023-01/1674160610_ogorodniku-com-p-spa-foto-56.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        div {
+            width: 250px; 
+            height: 200px; 
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <form action="auth.php" method="post">
-        <input name="login" type="text" placeholder="Логин">
-        <input name="password" type="password" placeholder="Пароль">
-        <input name="submit" type="submit" value="Войти">
-    </form>
+    <div>
+        <h2>Авторизация</h2>
+        <form action="auth.php" method="post">
+            <input name="login" type="text" placeholder="Логин"><br><br>
+            <input name="password" type="password" placeholder="Пароль"><br><br>
+            <input name="submit" type="submit" value="Войти">
+        </form>
+    </div>
 </body>
 </html>
-
-
-
-    <!--  $username = $_POST['login'] ?? null;
-    $password = $_POST['password'] ?? null;
-
-
-    if (null !== $username || null !== $password) {
-
-        // Если пароль из базы совпадает с паролем из формы
-        if ($password === $users['login']['password']) {
-        
-            // Стартуем сессию:
-            session_start(); 
-            
-        // Пишем в сессию информацию о том, что мы авторизовались:
-            $_SESSION['auth'] = true; 
-            
-            // Пишем в сессию логин и id пользователя
-            $_SESSION['id'] = $users['login']['id']; 
-            $_SESSION['login'] = $username; 
-
-        }
-    }
-
-    session_start();
-
-    $auth = $_SESSION['auth'] ?? null;
-
-    if(!$auth) { ?>
-        <html>
-        <body>
-            <form action="upload.php" method="post">
-                <input name="login" type="text" placeholder="Логин">
-                <input name="password" type="password" placeholder="Пароль">
-                <input name="submit" type="submit" value="Войти">
-            </form>
-        </body>
-        </html> -->
