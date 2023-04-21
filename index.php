@@ -1,10 +1,24 @@
 <?php
     //Запуск сессий;
-session_start();
-//если пользователь не авторизован
+    session_start();
+    //Время акции
+    if (!isset($_SESSION['start_time']))
+    {
+        $str_time = time();
+        $_SESSION['start_time'] = $str_time;
+    }
+    $temp_time = time();
+    $time = $_SESSION['start_time'];
+    $past_tense = $temp_time - $time;
+    $result = gmdate("H:i:s", (86400 - $past_tense) + 7);
+    /* $admin_sale = 15;
+    $user1_sale = 20;
+    $user2_sale = 18;
+    $user3_sale = 12; */
 
-if (!(isset($_SESSION['Name'])))
-{
+    //если пользователь не авторизован
+    if (!(isset($_SESSION['Name'])))
+    {
     //идем на страницу авторизации
     //header("Location: login.php");
     //exit;
@@ -61,7 +75,8 @@ if (!(isset($_SESSION['Name'])))
                 }
 
                 .content {
-                    background-color: rgba(127, 255, 212, 0.5);
+                    display: flex;
+                    background-color: rgba(245, 245, 245, 0.5);
                     height: 637px;
                 }
 
@@ -96,11 +111,15 @@ if (!(isset($_SESSION['Name'])))
             </div>
         </body>
         </html>
-<?php }
-else {
-//Выводим саму страницу для авторизованных пользователей
-$nm = $_SESSION['Name'] ;
-?> 
+    <?php }
+    else {
+    //Выводим саму страницу для авторизованных пользователей
+    $nm = $_SESSION['Name'] ;
+    if (isset($_SESSION["rand_price"]) === false) {
+        $_SESSION["rand_price"] = rand(5, 20);
+    }
+    $sale = $_SESSION["rand_price"];
+    ?> 
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -153,8 +172,24 @@ $nm = $_SESSION['Name'] ;
                 }
 
                 .content {
-                    background-color: rgba(127, 255, 212, 0.5);
+                    display: flex;
+                    background-color: rgba(245, 245, 245, 0.5);
                     height: 637px;
+                }
+
+                .content p {
+                    float:left;
+                    margin-left: 40px;
+                    margin-right: auto;
+                    font-size: 18px;
+                }
+
+                .content .sale {
+                    float:right;
+                    margin-left: auto;
+                    margin-right: 40px;
+                    font-size: 20px;
+                    color:#006400;
                 }
 
                 .footer {
@@ -182,19 +217,19 @@ $nm = $_SESSION['Name'] ;
                 </div>
             </div>
             <div class="content">
-                
+                <p>Для вас сегодня действует персональная скидка, <?=$sale?>% на все услуги. Акция действует 24 часа.</p><br>
+                <p class="sale">До конца акции осталось <?= $result ?></p>
             </div>
             <div class="footer">
             <p class="footer-copyright">Copyright © 2023 Позднышев Евгений.</p>
             </div>
         </body>
         </html>        
-<?php };
+    <?php };
     if (isset($_GET["is_exit"])) { //Если нажата кнопка выхода
         if ($_GET["is_exit"] == 1) {
             unset($_SESSION['Name']);
             session_unset();
-           // session_destroy(); //Выходим
             header("Location: index.php?is_exit=0"); //Редирект после выхода
         }
     }
