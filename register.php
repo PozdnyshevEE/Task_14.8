@@ -1,5 +1,7 @@
 <?php
     include 'auth.php';
+    $showAlert = false; 
+    $showError = false; 
     $array = getUsersList();
     $array_temp = array();
     $id = count($array);
@@ -11,18 +13,20 @@
         // Записываем в базу новый логин и пароль
         if (!existsUser($login)) {
             if ($password === $rpassword) {
-                /* $array_temp['id'] = $id;
-                $array_temp['password'] = $password; */
-                $array[$login] = $array_temp[$id][$password];
-            }
-        } else {
-            // логин занят, выведем сообщение об этом
+                $array_temp['id'] = $id + 1;
+                $array_temp['password'] = md5($password);
+                $array[$login] = $array_temp['id']['password'];
+                $showAlert = true;
+            }else {
+                $showError = "Passwords do not match";
+        }  
+        }else {
+            $showError ="Username not available";
         }
-        foreach ($array as $key => $value) {
-            echo "$key => $value";
-        }
-        $_SESSION['Name'] = $login; // пометка об авторизации
+        print_r($array_temp);
+       // $_SESSION['Name'] = $login; // пометка об авторизации
     }
+    
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -50,14 +54,44 @@
     </head>
     <body>
         <div>
-            <p><?=$last_id;?></p>
             <h2>Регистрация</h2>
             <form action="" method="POST">
                 <input name="login" placeholder="Логин"><br><br>
                 <input name="password" type="password" placeholder="Пароль"><br><br>
                 <input name="repeatPassword" type="password" placeholder="Повторите пароль"><br><br>
                 <input type="submit">
+                <input type="button" value="Авторизоваться">
+                <?php
+                    if($showAlert) {
+                        echo '<div class="alert alert-success 
+                        alert-dismissible fade show" role="alert">
+                
+                        <strong>Success!</strong> Your account is 
+                        now created and you can login. 
+                        <button type="button" class="close"
+                            data-dismiss="alert" aria-label="Close"> 
+                            <span aria-hidden="true">×</span> 
+                        </button> 
+                        </div> ';
+                    }
+                    if($showError) {
+            
+                        echo ' <div class="alert alert-danger 
+                            alert-dismissible fade show" role="alert"> 
+                        <strong>Error!</strong> '. $showError.'
+                        </div> '; 
+                    }
+        ?>
             </form>
         </div>
+        <?php
+                    
+            
+                        echo ' <div class="alert alert-danger 
+                            alert-dismissible fade show" role="alert"> 
+                        <strong>Error!</strong> '.var_dump($array_temp).'
+                        </div> '; 
+                
+        ?>
     </body>
     </html>
