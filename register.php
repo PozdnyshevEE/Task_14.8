@@ -18,10 +18,10 @@
                 $array[$login] = $array_temp['id']['password'];
                 $showAlert = true;
             }else {
-                $showError = "Passwords do not match";
+                $showError = "Пароли не совпадают";
         }  
         }else {
-            $showError ="Username not available";
+            $showError ="Пользователь с таким логином уже существует";
         }
         print_r($array_temp);
        // $_SESSION['Name'] = $login; // пометка об авторизации
@@ -58,40 +58,18 @@
             <form action="" method="POST">
                 <input name="login" placeholder="Логин"><br><br>
                 <input name="password" type="password" placeholder="Пароль"><br><br>
-                <input name="repeatPassword" type="password" placeholder="Повторите пароль"><br><br>
+                <input name="repeatPassword" type="password" placeholder="Потвердите пароль"><br><br>
                 <input type="submit">
                 <input type="button" value="Авторизоваться">
                 <?php
                     if($showAlert) {
-                        echo '<div class="alert alert-success 
-                        alert-dismissible fade show" role="alert">
-                
-                        <strong>Success!</strong> Your account is 
-                        now created and you can login. 
-                        <button type="button" class="close"
-                            data-dismiss="alert" aria-label="Close"> 
-                            <span aria-hidden="true">×</span> 
-                        </button> 
-                        </div> ';
+                        echo '<div><strong>Success!</strong> Новый пользователь зарегестрирован.</div>';
                     }
                     if($showError) {
-            
-                        echo ' <div class="alert alert-danger 
-                            alert-dismissible fade show" role="alert"> 
-                        <strong>Error!</strong> '. $showError.'
-                        </div> '; 
+                        echo ' <div><strong>Error!</strong> '. $showError.'</div>'; 
                     }
-        ?>
+                ?>
             </form>
         </div>
-        <?php
-                    
-            
-                        echo ' <div class="alert alert-danger 
-                            alert-dismissible fade show" role="alert"> 
-                        <strong>Error!</strong> '.var_dump($array_temp).'
-                        </div> '; 
-                
-        ?>
     </body>
     </html>

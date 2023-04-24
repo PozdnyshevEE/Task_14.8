@@ -1,3 +1,37 @@
+<?php
+
+    //Запуск сессий;
+    session_start();
+
+    include 'auth.php';
+
+    // Если пользователь авторизован
+    if ((isset($_SESSION['Name'])))
+    {
+        //идем на Главную страницу
+        header("Location: index.php");
+        exit;
+    };
+
+    if (isset($_POST['login']) && isset($_POST['password']))
+    {
+        // получаем данные из формы с авторизацией
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        //проверка пароля и логина
+        if (checkPassword($login, $password)){
+        echo ("Логин и пароль верны");
+        $_SESSION['Name']=$login;
+        // идем на страницу для авторизованного пользователя
+        header("Location: index.php");
+        } 
+        else
+        {
+            $message = 'Неверный логин или пароль.';
+        }
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +59,15 @@
 <body>
     <div>
         <h2>Авторизация</h2>
-        <form action="auth.php" method="post">
+        <form action="" method="post">
             <input name="login" type="text" placeholder="Логин"><br><br>
             <input name="password" type="password" placeholder="Пароль"><br><br>
             <input name="submit" type="submit" value="Войти">
+        <?php
+            if ($message) {
+                echo '<div>'. $message. '</div>';
+            }
+        ?>
         </form>
     </div>
 </body>

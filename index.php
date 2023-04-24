@@ -11,17 +11,10 @@
     $time = $_SESSION['start_time'];
     $past_tense = $temp_time - $time;
     $result = gmdate("H:i:s", (86400 - $past_tense) + 7);
-    /* $admin_sale = 15;
-    $user1_sale = 20;
-    $user2_sale = 18;
-    $user3_sale = 12; */
 
     //если пользователь не авторизован
     if (!(isset($_SESSION['Name'])))
     {
-    //идем на страницу авторизации
-    //header("Location: login.php");
-    //exit;
     ?>
     <!DOCTYPE html>
         <html lang="en">

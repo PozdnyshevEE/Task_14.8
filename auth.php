@@ -37,34 +37,3 @@
         }
         return null;
     }
-    
-    //Запуск сессий;
-    session_start();
-
-    // Если пользователь авторизован
-    if ((isset($_SESSION['Name'])))
-    {
-        //идем на Главную страницу
-        header("Location: index.php");
-        exit;
-    };
-
-    if (isset($_POST['login']) && isset($_POST['password']))
-    {
-        // получаем данные из формы с авторизацией
-        $login = $_POST['login'];
-        $password = $_POST['password'];
-        //проверка пароля и логина
-        if (checkPassword($login, $password)){
-        echo ("Логин и пароль верны");
-        $_SESSION['Name']=$login;
-        // идем на страницу для авторизованного пользователя
-        header("Location: index.php");
-    }
-    else
-        {
-            die('Такой логин с паролем не найдены в базе данных.');?>
-            <a href="login.php">Повторить ввод логина и пароля</a>
-<?php   }
-    }
-?>
