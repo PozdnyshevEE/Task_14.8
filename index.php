@@ -1,13 +1,13 @@
 <?php
     //Запуск сессий;
     session_start();
-    //Время акции
+    //Время начала сессии
     if (!isset($_SESSION['start_time']))
     {
         $str_time = time();
         $_SESSION['start_time'] = $str_time;
     }
-    $temp_time = time();
+    $temp_time = time(); // Текущее время
     $time = $_SESSION['start_time'];
     $past_tense = $temp_time - $time;
     $result = gmdate("H:i:s", (86400 - $past_tense) + 7);
@@ -177,12 +177,18 @@
                     font-size: 18px;
                 }
 
-                .content .sale {
+                .content .sale {    
                     float:right;
                     margin-left: auto;
                     margin-right: 40px;
                     font-size: 20px;
                     color:#006400;
+                }
+
+                .formBirthday {
+                    width: 350px; 
+                    height: 200px; 
+                    margin: 0;
                 }
 
                 .footer {
@@ -210,8 +216,35 @@
                 </div>
             </div>
             <div class="content">
-                <p>Для вас сегодня действует персональная скидка, <?=$sale?>% на все услуги. Акция действует 24 часа.</p><br>
-                <p class="sale">До конца акции осталось <?= $result ?></p>
+                <?php 
+                    if (!isset($_COOKIE['birthday'])) {
+                ?>
+                        <div class="formBirthday">
+                            <h2>Введите дату своего рождения</h2>
+                            <form action="" method="POST">
+                                <input name="day" placeholder="День рождения"><br><br>
+                                <input name="month" placeholder="Месяц рождения"><br><br>
+                                <input name="year" placeholder="Год рождения"><br><br>
+                                <input type="submit">
+                            </form>
+                        </div>
+                <?php
+                        $day = $_POST['day'];
+                        $month = $_POST['month'];
+                        $year = $_POST['year'];
+                        $data = $year .'-'. $month . '-' . $day;
+                        $timestamp = strtotime($data);
+                        setcookie('birthday',$timestamp,time() + 3600 * 24);
+                        print_r($_COOKIE['birtday']); 
+                    } else {
+                        $time = time();
+
+                ?>
+                    <p>Для вас сегодня действует персональная скидка, <?=$sale?>% на все услуги. Акция действует 24 часа.</p><br>
+                    <p class="sale">До конца акции осталось <?= $result ?></p>
+                <?php
+                    }
+                ?>
             </div>
             <div class="footer">
             <p class="footer-copyright">Copyright © 2023 Позднышев Евгений.</p>
