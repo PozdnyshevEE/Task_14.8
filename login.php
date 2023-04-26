@@ -21,7 +21,8 @@
         //проверка пароля и логина
         if (checkPassword($login, $password)){
         echo ("Логин и пароль верны");
-        $_SESSION['Name']=$login;
+        $_SESSION['Name'] = getCurrentUser();
+        $_SESSION['id'] = $users[$login]['id'];
         // идем на страницу для авторизованного пользователя
         header("Location: index.php");
         } 

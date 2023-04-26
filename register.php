@@ -1,8 +1,10 @@
 <?php
+
     include 'auth.php';
+    
     $showAlert = false; 
     $showError = false; 
-    $array = getUsersList();
+    $array = array();
     $array_temp = array();
     $id = count($array);
     if (!empty($_POST['login']) and !empty($_POST['password'])) {
@@ -15,7 +17,8 @@
             if ($password === $rpassword) {
                 $array_temp['id'] = $id + 1;
                 $array_temp['password'] = md5($password);
-                $array[$login] = $array_temp['id']['password'];
+                $array[$login] = $array_temp;
+                
                 $showAlert = true;
             }else {
                 $showError = "Пароли не совпадают";
@@ -23,8 +26,7 @@
         }else {
             $showError ="Пользователь с таким логином уже существует";
         }
-        print_r($array_temp);
-       // $_SESSION['Name'] = $login; // пометка об авторизации
+        $_SESSION['Name'] = $login; // пометка об авторизации
     }
     
     ?>
@@ -63,10 +65,11 @@
                 <input type="button" value="Авторизоваться">
                 <?php
                     if($showAlert) {
-                        echo '<div><strong>Success!</strong> Новый пользователь зарегестрирован.</div>';
+                        echo '<div>Новый пользователь зарегестрирован.</div>';
+                        return $array;
                     }
                     if($showError) {
-                        echo ' <div><strong>Error!</strong> '. $showError.'</div>'; 
+                        echo '<div>'. $showError.'</div>'; 
                     }
                 ?>
             </form>

@@ -68,9 +68,34 @@
                 }
 
                 .content {
-                    display: flex;
+                    
                     background-color: rgba(245, 245, 245, 0.5);
                     height: 637px;
+                }
+
+                .content img {
+                    width: 200px;
+                    height: 150px;
+                }
+
+                .content .services {
+                    display: flex;
+                    height: 200px;
+                    background-color: #7e7e7e;
+                }
+
+                .margin {
+                    margin: 10px;
+                    text-align: center;
+                }
+
+                .content span {
+                    font-size: 30px;
+                    color: #660606;
+                }
+                .content h2 {
+                    font-size: 30px;
+                    
                 }
 
                 .footer {
@@ -97,7 +122,22 @@
                 </div>
             </div>
             <div class="content">
-                
+                <h2>Наши услуги</h2>
+                <div class="services">
+                    <div class="massage margin">
+                        <img src="https://avatars.mds.yandex.net/i?id=4e05a6ff28cb0990d9b934cc47a19d9def91eb8e-9099802-images-thumbs&n=13" alt="massage">
+                        <p>Массаж</p>
+                    </div>
+                    <div class="aromatherapy margin">
+                        <img src="https://avatars.mds.yandex.net/i?id=bdea36d2fd5ace2bfaf9898f48b2e309-5434079-images-thumbs&n=13" alt="aromatherapy">
+                        <p>Ароматерапия</p>
+                    </div>
+                    <div class="manicure margin">
+                        <img src="https://avatars.mds.yandex.net/i?id=bbf3257b4c0c23cd57efa42c2d7258eff69ca092-9068434-images-thumbs&n=13" alt="manicure">
+                        <p>Маникюр</p>
+                    </div>
+                </div>
+                <span>Акция! При регистрации на нашем сайте в подарок 10% скидки на любую процедуру.</span>
             </div>
             <div class="footer">
             <p class="footer-copyright">Copyright © 2023 Позднышев Евгений.</p>
@@ -217,7 +257,7 @@
             </div>
             <div class="content">
                 <?php 
-                    if (!isset($_COOKIE['birthday'])) {
+                    if (!isset($_COOKIE['birthday']) and !isset($_SESSION['id'])) {
                 ?>
                         <div class="formBirthday">
                             <h2>Введите дату своего рождения</h2>
@@ -232,13 +272,12 @@
                         $day = $_POST['day'];
                         $month = $_POST['month'];
                         $year = $_POST['year'];
-                        $data = $year .'-'. $month . '-' . $day;
-                        $timestamp = strtotime($data);
-                        setcookie('birthday',$timestamp,time() + 3600 * 24);
-                        print_r($_COOKIE['birtday']); 
+                        $date = $year .'-'. $month . '-' . $day;
+                        $timestamp = strtotime($date);
+                        setcookie('birthday',$timestamp, time() + 3600);
+                        setcookie('login', $_SESSION['Name'], time() + 3600);
+                        print_r('Birthday = ' . $_COOKIE['birthday'] . 'login = ' . $_COOKIE['login']);  
                     } else {
-                        $time = time();
-
                 ?>
                     <p>Для вас сегодня действует персональная скидка, <?=$sale?>% на все услуги. Акция действует 24 часа.</p><br>
                     <p class="sale">До конца акции осталось <?= $result ?></p>
